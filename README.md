@@ -6,6 +6,8 @@ Mitä ominaisuuksia olet jo toteuttanut projektiisi?
 *  Lukee tiedoston "Tilitapahtumat.csv"
 *  Luo tapahtumista oliot ja osaa ryhmitellä saman paikan tapahtumat yhteen nimikkeeseen
 *  Jaottelee tapahtumat tuloihin, menoihin ja sisäisiin siirtoihin. (Sisäisiä siirtoja ei ole mitenkään vielä implementoitu, jäävät vain pois tuloista)
+*  Antaa käyttäjälle mahdollisuuden valita haluaako nähdä tulot vai menot, luo sitten listauksen näistä ja niiden osuuksista.
+*  En ole vielä juuri testaillut virheitä yms. 
 
 
 Käyttöohje
