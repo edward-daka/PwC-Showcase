@@ -11,7 +11,10 @@ class StatementManagement():
         # lisää transaktion tuloihin ja menoihin, ellei se ole sisäinen siirto
         self.__transactions.append(value)
         if len(self.__messages) == 0:
-            pass
+            if value >= 0:
+                self.__incomes.append(value)
+            else:
+                self.__expenses.append(value)
         elif self.__messages[len(self.__messages) - 1] == "Omasiirto":
             pass
         elif value >= 0:
