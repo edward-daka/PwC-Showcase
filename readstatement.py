@@ -7,7 +7,8 @@ class ReadFile():
 
         self.__file_name = file_name
         self.list_of_transaction_objects = []
-        self.list_of_grouped_objects = []
+        self.list_of_grouped_incomes = []
+        self.list_of_grouped_expenses = []
 
     def read_file(self, file_to_open):
         # Lukee tiedoston, luoden tilitapahtumille oliot.
@@ -56,19 +57,23 @@ class ReadFile():
                             object.add_transaction(float(row[2]))
                         else:
                             pass
-    def add_to_group(self,name):
-        self.list_of_grouped_objects.append(name)
+    def add_to_income_group(self,name):
+        self.list_of_grouped_incomes.append(name)
 
+    def add_to_expenses_group(self,name):
+        self.list_of_grouped_expenses.append(name)
 
     def get_object_list(self):
         # palauttaa listan luoduista olioista
 
         return self.list_of_transaction_objects
 
-    def get_group_list(self):
+    def get_income_group(self):
 
-        return self.list_of_grouped_objects
+        return self.list_of_grouped_incomes
+    def get_expense_group(self):
 
+        return self.list_of_grouped_expenses
     def get_list_name(self):
         # palauttaa oliolistan/tiedoston nimen
         return self.__file_name

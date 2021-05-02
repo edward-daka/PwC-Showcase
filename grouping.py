@@ -24,7 +24,7 @@ class Grouping():
                         self.grouped_transactions.append(income)
                         self.total_grouped_transactions += income
                    else:
-                       expenses_list = object.get_expenses_list
+                       expenses_list = object.get_expenses_list()
                        for expense in expenses_list:
                            self.grouped_transactions.append(expense)
                            self.total_grouped_transactions += expense

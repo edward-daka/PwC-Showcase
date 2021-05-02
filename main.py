@@ -7,7 +7,7 @@ from grouping import Grouping
 def print_incomes(file_object):
 
     # Luo Expenses-luokkaa hyödyntäen sanakirjat menoista, ja tulostaa niistä jaottelun suurimmasta pienimpään.
- if file_object.get_group_list():
+ if file_object.get_income_group():
     grouped_or_not = input("Do you want to show the transaction grouped or not ? (y/n) \n")
 
     if grouped_or_not == "n":
@@ -20,7 +20,7 @@ def print_incomes(file_object):
          list_of_transactions = file_object.get_object_list()
          incomes_list = income.Incomes(file_object.get_list_name())
          dictionary_of_incomes = incomes_list.incomes_list(list_of_transactions)
-         group_list = file_object.get_group_list()
+         group_list = file_object.get_income_group()
          grouped_items = Grouping(file_object.get_list_name())
          dictionary_of_groups,already_listed = grouped_items.create_dictionary(group_list)
          dictionary_of_incomes.update(dictionary_of_groups)
@@ -65,11 +65,33 @@ def print_graph(dictionary,type):
 def print_expenses(file_object):
 
     # Luo Expenses-luokkaa hyödyntäen sanakirjat menoista, ja tulostaa niistä jaottelun suurimmasta pienimpään.
-    if
-    list_of_transactions = file_object.get_object_list()
-    expenses_list = expenses.Expenses(file_object.get_list_name())
-    dictionary_of_expenses = expenses_list.expenses_list(list_of_transactions)
-    print_graph(dictionary_of_expenses,False)
+    if file_object.get_expense_group():
+        grouped_or_not = input("Do you want to show the transaction grouped or not ? (y/n) \n")
+        if grouped_or_not == "n":
+            list_of_transactions = file_object.get_object_list()
+            expenses_list = expenses.Expenses(file_object.get_list_name())
+            dictionary_of_expenses = expenses_list.expenses_list(list_of_transactions)
+            type = False
+            print_graph(dictionary_of_expenses,type)
+
+        elif grouped_or_not == "y":
+            list_of_transactions = file_object.get_object_list()
+            expenses_list = expenses.Expenses(file_object.get_list_name())
+            dictionary_of_expenses = expenses_list.expenses_list(list_of_transactions)
+            group_list = file_object.get_expense_group()
+            grouped_items = Grouping(file_object.get_list_name())
+            dictionary_of_groups, already_listed = grouped_items.create_dictionary(group_list)
+            dictionary_of_expenses.update(dictionary_of_groups)
+            for items in already_listed:
+                dictionary_of_expenses.pop(items)
+            type = False
+            print_graph(dictionary_of_expenses, type)
+
+    else:
+        list_of_transactions = file_object.get_object_list()
+        expenses_list = expenses.Expenses(file_object.get_list_name())
+        dictionary_of_expenses = expenses_list.expenses_list(list_of_transactions)
+        print_graph(dictionary_of_expenses,False)
 
 
 
@@ -134,17 +156,20 @@ def group_it(file_object):
     while all_grouped == False:
         name_of_group = input("What is the name of your group ?\n")
         grouped_items = (Grouping(name_of_group))
-        file_object.add_to_group(grouped_items)
         object_list = file_object.get_object_list()
         type_given = False
         while type_given == False:
             type = input("Are the added transactions expenses or incomes ?")
             if type == "incomes":
+               file_object.add_to_income_group(grouped_items)
                grouped_items.add_transaction_to_group(object_list,True)
                type_given == True
+               break
             elif type == "expenses":
+               file_object.add_to_expenses_group(grouped_items)
                grouped_items.add_transaction_to_group(object_list,False)
                type_given == True
+               break
             else:
                 print("Please input 'incomes' or 'expenses'")
         next_step = input("Would you like to make more groups ? (y/n)")
@@ -156,12 +181,13 @@ def group_it(file_object):
 
 
 def main():
-
-
+    reading_file = True
+    print("")
+    print("Welcome to the money tracker !")
+    print("")
+    while reading_file == True:
       try:
-        print("")
-        print("Welcome to the money tracker !")
-        print("")
+
         file_to_open = input("Enter the name of the statement file:\n")
         file_object = ReadFile(file_to_open)
         file_object.read_file(file_to_open)
@@ -177,8 +203,11 @@ def main():
               group_it(file_object)
             next_action = selection_panel()
         print("Thank you for testing!")
+        reading_file = False
       except OSError:
-          print("Error in reading the file.")
+          print("Error in reading the file:",file_to_open)
+          print("Please try again !")
+          print("")
 
 
 
