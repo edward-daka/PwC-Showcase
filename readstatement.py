@@ -1,6 +1,6 @@
 import csv
 import statementmanagement
-
+import random
 class ReadFile():
 
     def __init__(self, file_name):
@@ -19,6 +19,7 @@ class ReadFile():
             amounts = []
             incomes = []
             expenses = []
+
             for row in csv_reader:
                 # Lukee ensin csv.tiedostolta tilitapahtuman nimen
                 name = str(row[5])
@@ -38,9 +39,15 @@ class ReadFile():
                         message_info = messages_split[1]
                         self.list_of_transaction_objects[len(self.list_of_transaction_objects) - 1].add_message(
                             message_info)
-                    amount = float(row[2])
-                    amounts.append(amount)
-                    self.list_of_transaction_objects[len(self.list_of_transaction_objects) - 1].add_transaction(amount)
+                    try:
+                        amount = float(row[2])
+                        amounts.append(amount)
+                        self.list_of_transaction_objects[len(self.list_of_transaction_objects) - 1].add_transaction(
+                            amount)
+                    except ValueError:
+                        print("Failed to add amount for",name,"because the amount on the file wasn't an integer or float.")
+                        print("Please check the file and run the program again, if you want to include the",name,"transaction")
+
                 # Jos on olemassa jo saman niminen tilitapahtuma, lisätään siihen vain uusi transaktio ja viesti
                 else:
                     for object in self.list_of_transaction_objects:
@@ -54,9 +61,18 @@ class ReadFile():
                             else:
                                 message_info = messages_split[1]
                                 object.add_message(message_info)
-                            object.add_transaction(float(row[2]))
+                            try:
+                                object.add_transaction(float(row[2]))
+                            except ValueError:
+                                print("Failed to add amount for", transaction_name,
+                                      "because the amount on the file wasn't an integer or float.")
+                                print("Please check the file and run the program again, if you want to include the",
+                                      transaction_name, "transaction")
                         else:
                             pass
+
+
+
     def add_to_income_group(self,name):
         self.list_of_grouped_incomes.append(name)
 

@@ -14,7 +14,10 @@ def print_incomes(file_object):
         list_of_transactions = file_object.get_object_list()
         incomes_list = income.Incomes(file_object.get_list_name())
         dictionary_of_incomes = incomes_list.incomes_list(list_of_transactions)
-        print_graph(dictionary_of_incomes)
+        if not dictionary_of_incomes:
+            print("No incomes found")
+        else:
+            print_graph(dictionary_of_incomes,True)
 
     elif grouped_or_not == "y":
          list_of_transactions = file_object.get_object_list()
@@ -28,11 +31,17 @@ def print_incomes(file_object):
              dictionary_of_incomes.pop(items)
          type = True
          print_graph(dictionary_of_incomes,type)
+    else:
+        print("Please select 'y' or 'n' (yes/no)")
  else:
         list_of_transactions = file_object.get_object_list()
         incomes_list = income.Incomes(file_object.get_list_name())
         dictionary_of_incomes = incomes_list.incomes_list(list_of_transactions)
-        print_graph(dictionary_of_incomes,True)
+        if not dictionary_of_incomes:
+            print("No incomes found.")
+        else:
+            print_graph(dictionary_of_incomes,True)
+
 
 
 def print_graph(dictionary,type):
@@ -54,7 +63,7 @@ def print_graph(dictionary,type):
         print("{:<40} | ".format(name), end="")
         percentage_of_whole = (dictionary[name] / total_sum) * 100
         percentage_of_pillars = round(percentage_of_whole / 2)
-        print((pillar * percentage_of_pillars).ljust(45), end="")
+        print((pillar * percentage_of_pillars).ljust(50), end="")
         print("({:.2f}%)".format(percentage_of_whole))
 
 
@@ -91,7 +100,11 @@ def print_expenses(file_object):
         list_of_transactions = file_object.get_object_list()
         expenses_list = expenses.Expenses(file_object.get_list_name())
         dictionary_of_expenses = expenses_list.expenses_list(list_of_transactions)
-        print_graph(dictionary_of_expenses,False)
+        if not dictionary_of_expenses:
+            print("No expenses found.")
+        else:
+            print_graph(dictionary_of_expenses,False)
+
 
 
 
@@ -108,7 +121,7 @@ def selection_panel():
     print("")
     # Tarkistaa että annettu luku on kokonaisluku ja vaihtoehtojen sisällä
     is_correct = True
-    while is_correct == True:
+    while is_correct:
         action = (input("Insert the number for the corresponding information:\n"))
         try:
             action = int(action)
@@ -125,54 +138,78 @@ def selection_panel():
 
 def kelacalculator(file_object):
 
-    kela_months = {"1": 23554, "2" : 22172, "3" : 20790,"4" : 19408,"5" : 18026,"6" : 16644,"7" : 15262,"8" : 13880,"9" : 12498,"10" : 11116,"11" : 9734,"12" : 8352,}
+    kela_months = {1 : 23554, 2 : 22172, 3 : 20790, 4 : 19408, 5 : 18026, 6 : 16644, 7 : 15262, 8 : 13880, 9 : 12498, 10 : 11116, 11 : 9734, 12 : 8352,}
 
     print("I'll help you calculate how much more you can earn")
     print("before you'll need to contact KELA regarding your student benefits.")
     print("")
-    benefit_months = str(input("How many benefit months do you have during the year ? \n"))
-    limit = (kela_months[benefit_months])
-    already_earned = int(input("How much have you already earned during the year ?\n"))
-    if already_earned > limit:
-        print("You've already earned beyond your limit. Please contact KELA for further instructions. https://www.kela.fi/asiakaspalvelu")
-    else:
-        list_of_transactions = file_object.get_object_list()
-        incomes_list = income.Incomes(file_object.get_list_name())
-        dictionary_of_incomes = incomes_list.incomes_list(list_of_transactions)
-        total_sum = 0
-        i = 0
-        for name in dictionary_of_incomes:
-            total_sum = total_sum + dictionary_of_incomes[name]
-        while already_earned <= limit:
-            already_earned = already_earned + total_sum
-            i = i + 1
-        print("With your current earnings of {} € you'll need to check your student benefits in {} months.".format(total_sum,i))
+    is_correct = True
+    while is_correct:
+        benefit_months = (input("How many benefit months do you have during the year ? \n"))
+        try:
+            benefit_months = int(benefit_months)
+            if not (1 <= benefit_months <= 12):
+                print("Please enter an integer between 1 and 12.")
+                continue
+            else:
+                limit = (kela_months[benefit_months])
+                it_correct = True
+                while it_correct:
+                    already_earned = (input("How much have you already earned during the year ? \n"))
+                    try:
+                        already_earned = float(already_earned)
+                        if already_earned > limit:
+                            print("You've already earned beyond your limit. Please contact KELA for further instructions. https://www.kela.fi/asiakaspalvelu")
+
+
+                        else:
+                            list_of_transactions = file_object.get_object_list()
+                            incomes_list = income.Incomes(file_object.get_list_name())
+                            dictionary_of_incomes = incomes_list.incomes_list(list_of_transactions)
+                            total_sum = 0
+                            i = 0
+                            for name in dictionary_of_incomes:
+                                total_sum = total_sum + dictionary_of_incomes[name]
+                            while already_earned <= limit:
+                                already_earned = already_earned + total_sum
+                                i = i + 1
+                            if i >= 12:
+                                print("With your current earnings of {:.2f} € you won't need to check your students benefits for at least 1 year.".format(total_sum))
+                            else:
+                                print("With your current earnings of {:.2f} € you'll need to check your student benefits in {} months.".format(total_sum,i))
+                            is_correct = False
+                            it_correct = False
+                    except ValueError:
+                        print(already_earned, "isn't an float or integer. Please enter the correct number.")
+
+        except ValueError:
+            print(benefit_months,"is not an integer. Please enter an integer between 1 and 12.")
 
 def group_it(file_object):
 
     print("In this part of the program, you can group transactions.")
     grouped_objects = []
     all_grouped = False
-    while all_grouped == False:
+    while not all_grouped:
         name_of_group = input("What is the name of your group ?\n")
         grouped_items = (Grouping(name_of_group))
         object_list = file_object.get_object_list()
         type_given = False
-        while type_given == False:
-            type = input("Are the added transactions expenses or incomes ?")
+        while not type_given:
+            type = input("Are the added transactions expenses or incomes ?\n")
             if type == "incomes":
                file_object.add_to_income_group(grouped_items)
                grouped_items.add_transaction_to_group(object_list,True)
-               type_given == True
+               type_given = True
                break
             elif type == "expenses":
                file_object.add_to_expenses_group(grouped_items)
                grouped_items.add_transaction_to_group(object_list,False)
-               type_given == True
+               type_given = True
                break
             else:
                 print("Please input 'incomes' or 'expenses'")
-        next_step = input("Would you like to make more groups ? (y/n)")
+        next_step = input("Would you like to make more groups ? (y/n)\n")
 
         if next_step == "y":
            pass
@@ -189,8 +226,11 @@ def main():
       try:
 
         file_to_open = input("Enter the name of the statement file:\n")
+        if file_to_open[-3:] != "csv":
+            print("We can only handle files in 'csv' format!")
         file_object = ReadFile(file_to_open)
         file_object.read_file(file_to_open)
+
         next_action = selection_panel()
         while next_action != 5:
             if next_action == 1:

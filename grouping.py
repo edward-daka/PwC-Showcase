@@ -1,5 +1,4 @@
-import readstatement
-import income
+
 class Grouping():
 
     def __init__(self,group_name):
@@ -11,8 +10,10 @@ class Grouping():
 
     def add_transaction_to_group(self,object_list,transaction_type):
         added_transaction = ""
+        print("You may finish adding by typing 'STOP'")
         while added_transaction != "STOP":
             added_transaction = input("What transaction would you like to add ?\n")
+
             passed = 0
             for object in object_list:
                 name = object.get_name()
@@ -20,9 +21,10 @@ class Grouping():
                    self.added_transactions.append(name)
                    if transaction_type == True:
                        incomes_list = object.get_incomes_list()
+
                        for income in incomes_list:
-                        self.grouped_transactions.append(income)
-                        self.total_grouped_transactions += income
+                            self.grouped_transactions.append(income)
+                            self.total_grouped_transactions += income
                    else:
                        expenses_list = object.get_expenses_list()
                        for expense in expenses_list:
@@ -30,7 +32,7 @@ class Grouping():
                            self.total_grouped_transactions += expense
                 else:
                     passed = passed + 1
-                    if passed == len(object_list):
+                    if passed == len(object_list) and added_transaction != "STOP":
                         print("Couldn't find that transaction in the file.")
 
     def create_dictionary(self,grouplist):
