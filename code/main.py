@@ -28,7 +28,10 @@ def print_incomes(file_object):
          dictionary_of_groups,already_listed = grouped_items.create_dictionary(group_list)
          dictionary_of_incomes.update(dictionary_of_groups)
          for items in already_listed:
-             dictionary_of_incomes.pop(items)
+             try:
+                dictionary_of_incomes.pop(items)
+             except KeyError:
+                print("Caution : You've added the same transaction to twice into groups!")
          type = True
          print_graph(dictionary_of_incomes,type)
     else:
@@ -50,9 +53,9 @@ def print_graph(dictionary,type):
     for name in dictionary:
         total_sum = total_sum + dictionary[name]
     if type == True:
-        print("{:<40} | ".format("Names of giver:"), end="")
+        print("{:<45} | ".format("Names of giver:"), end="")
     else:
-        print("{:<40} | ".format("Names of receivers:"), end="")
+        print("{:<45} | ".format("Names of receivers:"), end="")
     print("Percentages")
     print("")
     if type == True:
@@ -60,11 +63,12 @@ def print_graph(dictionary,type):
     else:
         dictionary = dict(sorted(dictionary.items(), key=lambda item: item[1]))
     for name in dictionary:
-        print("{:<40} | ".format(name), end="")
+        print("{:<45} | ".format(name), end="")
         percentage_of_whole = (dictionary[name] / total_sum) * 100
         percentage_of_pillars = round(percentage_of_whole / 2)
         print((pillar * percentage_of_pillars).ljust(50), end="")
-        print("({:.2f}%)".format(percentage_of_whole))
+        print(round(dictionary[name],1),"€",end="")
+        print(" ({:<.2f}%)".format(percentage_of_whole))
 
 
 
@@ -92,7 +96,10 @@ def print_expenses(file_object):
             dictionary_of_groups, already_listed = grouped_items.create_dictionary(group_list)
             dictionary_of_expenses.update(dictionary_of_groups)
             for items in already_listed:
-                dictionary_of_expenses.pop(items)
+                try:
+                    dictionary_of_expenses.pop(items)
+                except KeyError:
+                    print("Caution : You've added the same transaction to twice into groups!")
             type = False
             print_graph(dictionary_of_expenses, type)
 
@@ -209,12 +216,18 @@ def group_it(file_object):
                break
             else:
                 print("Please input 'incomes' or 'expenses'")
-        next_step = input("Would you like to make more groups ? (y/n)\n")
+        more_group = True
+        while more_group:
+            next_step = input("Would you like to make more groups ? (y/n)\n")
 
-        if next_step == "y":
-           pass
-        if next_step == "n":
-           all_grouped = True
+            if next_step == "y":
+               pass
+               more_group = False
+            elif next_step == "n":
+               all_grouped = True
+               more_group = False
+            else:
+                print("Please input 'y' or 'n' (yes/no)")
 
 
 def main():
@@ -224,7 +237,6 @@ def main():
     print("")
     while reading_file == True:
       try:
-
         file_to_open = input("Enter the name of the statement file:\n")
         if file_to_open[-3:] != "csv":
             print("We can only handle files in 'csv' format!")
