@@ -10,30 +10,26 @@ Mitä ominaisuuksia olet jo toteuttanut projektiisi?
 *  En ole vielä juuri testaillut virheitä yms. 
 
 
-Käyttöohje
+Tiedoston -ja kansiorakenne
     
-*  *Voiko ohjelmaa jo ajaa? (kyllä/ei)*
-        Kyllä. 
-   
-*   *Kuinka ohjelma käynnistetään?*
-        main.py auki, ja "Run"
-    
-*  *Mitä sillä voi tässä vaiheessa tehdä?*
-        Voit syöttää siihen testi tilitapahtumat "Tilitapahtumat.csv". Voit saada tilitapahtumista tulot ja menot, niihin on luotu yksinkertainen
-        visualisointi ja kertoo tulojen/menojen osuuden kokonaistuloista/menoista. 
+*  *Mikä kansio on mikäkin ?*
+        code = kansio sisältää ohjelman suorittamiseen tarvittavan koodin. 
+        documents = kansio sisältää projektisuunnitelman ja projektidokumentin. 
+        (Huom. Jouduin checkpointtia varten 26.3 tekemään uuden Gitlab-projektin, koska tiedostojen ajamisessa oli teknisiä vaikeuksia)
+        (Aloitin Gitlabin käytön ns. alusta, joten projektisuunnitelma puuttui alustavasti uudesta Gitlabistä, mutta olen näyttänyt sen vanhasta gitlabista mm. suunnitelmademossa.)
 
-Aikataulu
-    
-*  *Kuinka paljon olet jo käyttänyt aikaa projektiin?*
-    Olen käyttänyt noin 30h, iso osa ajasta meni alussa graafisen käyttöliittymän ymmärtämisen kanssa. Tämän toteutus oli odotettua haastavempaa, joten aloitin helpon vaatimuksista ensin.
-   
-*   *Onko ilmennyt muutoksia suunnitelman aikatauluun?*
-    Aikataulun suhteen ei atm. suurempia muutoksia.
 
-Muuta
+Asennusohje
     
-*  *Onko ilmaantunut erityisiä ongelmia?*
-        Käyttöliittymän ja graafin luomisessa haasteita. Odotettua työläämpää/haastavempaa.
+*  *Mitä kirjastoja tulisi asentaa ?*
+    Ohjelma ei käytä asennettavia kirjastoja, pelkkää Pythonin standard libraryä.
+    Olisi hyvä tarkistaa että PyCharmsissa käytettävä tulkitsija lukee oikeaa working directoriä.
+    Tämän voi tehdä menemällä *Run > Edit Configurations > Working directory*. Tarkista että lopussa oleva kansio on /code, mikäli *Tilitapahtumat.csv* tiedosto on siellä.
+
+Ohjelman käynnistys ja käyttö
     
-*  *Oletko joutunut tekemään muutoksia suunnitelmaasi?*
-        Olen päättänyt tehdä helpon vaatimukset ensin ja tämän jälkeen koitan saada keskivaikean vaatimuksen graafisesta käyttöliittymästä toteutettua.
+*  *Kuinka ohjelma käynnistetään?*
+       Valitaan PyCharmista main.py auki, ja suoritetaan "Run".
+       1. Syötetään haluttu tiedosto nimi (Tilitapahtumat.csv)
+       2. Mikäli tiedosto luetaan onnistuneesti antaa tämä valikon, jossa on vaihtoehtona 5 eri toimintoa.
+       3. Näistä toiminnoista voidaan valita haluttu. 
