@@ -1,6 +1,7 @@
 import csv
 import statementmanagement
-import random
+
+
 class ReadFile():
 
     def __init__(self, file_name):
