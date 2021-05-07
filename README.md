@@ -14,7 +14,8 @@ Tiedoston -ja kansiorakenne
     
 *  *Mikä kansio on mikäkin ?*
         code = kansio sisältää ohjelman suorittamiseen tarvittavan koodin. 
-        documents = kansio sisältää projektisuunnitelman ja projektidokumentin. 
+        documents = kansio sisältää projektisuunnitelman ja projektidokumentin.
+        idea. = Tuli vahingossa aiemman pushin myötä. Ei sisällä ohjelmaan tarvittavaa koodia.
         (Huom. Jouduin checkpointtia varten 26.3 tekemään uuden Gitlab-projektin, koska tiedostojen ajamisessa oli teknisiä vaikeuksia)
         (Aloitin Gitlabin käytön ns. alusta, joten projektisuunnitelma puuttui alustavasti uudesta Gitlabistä, mutta olen näyttänyt sen vanhasta gitlabista mm. suunnitelmademossa.)
 
