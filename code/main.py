@@ -6,7 +6,7 @@ import expenses
 from grouping import Grouping
 def print_incomes(file_object):
 
-    # Luo Expenses-luokkaa hyödyntäen sanakirjat menoista, ja tulostaa niistä jaottelun suurimmasta pienimpään.
+    # Luo Incomes-luokkaa hyödyntäen sanakirjat tuloista, ja tulostaa niistä jaottelun suurimmasta pienimpään.
  if file_object.get_income_group():
     grouped_or_not = input("Do you want to show the transaction grouped or not ? (y/n) \n")
 

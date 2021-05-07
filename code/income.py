@@ -21,15 +21,11 @@ class Incomes():
                 for income in incomes:
                     sum = income + sum
                 incomes = sum
-                self.total_sum = self.total_sum + incomes
                 self.dictionary[name] = incomes
 
 
         return self.dictionary
 
-    def get_total_incomes(self):
-
-        return self.total_sum
 
 
 
