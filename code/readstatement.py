@@ -15,11 +15,10 @@ class ReadFile():
         # Lukee tiedoston, luoden tilitapahtumille oliot.
         with open(file_to_open) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=';')
-            header_row = next(csv_reader)
+            next(csv_reader)
             names = []
             amounts = []
-            incomes = []
-            expenses = []
+
 
             for row in csv_reader:
                 # Lukee ensin csv.tiedostolta tilitapahtuman nimen

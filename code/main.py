@@ -35,7 +35,7 @@ def print_incomes(file_object):
          type = True
          print_graph(dictionary_of_incomes,type)
     else:
-        print("Please select 'y' or 'n' (yes/no)")
+        print("Error: Please select 'y' or 'n' (yes/no). Try again !")
  else:
         list_of_transactions = file_object.get_object_list()
         incomes_list = income.Incomes(file_object.get_list_name())
@@ -84,8 +84,10 @@ def print_expenses(file_object):
             list_of_transactions = file_object.get_object_list()
             expenses_list = expenses.Expenses(file_object.get_list_name())
             dictionary_of_expenses = expenses_list.expenses_list(list_of_transactions)
-            type = False
-            print_graph(dictionary_of_expenses,type)
+            if not dictionary_of_expenses:
+                print("No expenses found.")
+            else:
+                print_graph(dictionary_of_expenses, False)
 
         elif grouped_or_not == "y":
             list_of_transactions = file_object.get_object_list()
@@ -102,6 +104,8 @@ def print_expenses(file_object):
                     print("Caution : You've added the same transaction to twice into groups!")
             type = False
             print_graph(dictionary_of_expenses, type)
+        else:
+            print("Error: Please select 'y' or 'n' (yes/no). Try again !")
 
     else:
         list_of_transactions = file_object.get_object_list()
@@ -165,8 +169,8 @@ def kelacalculator(file_object):
                     already_earned = (input("How much have you already earned during the year ? \n"))
                     try:
                         already_earned = float(already_earned)
-                        if already_earned > limit:
-                            print("You've already earned beyond your limit. Please contact KELA for further instructions. https://www.kela.fi/asiakaspalvelu")
+                        if already_earned >= limit:
+                            print("You've earned your limit. Please contact KELA for further instructions. https://www.kela.fi/asiakaspalvelu")
 
 
                         else:
